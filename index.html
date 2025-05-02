@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator - Rajan Singh</title>
+    <link rel="shortcut icon" href="https://trend2u.netlify.app/pics/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+    <style>
+        body {
+            background-color: grey;
+        }
+
+        .container {
+            border: #cbced1 solid 1px;
+            margin: 20px;
+            border-radius: 10px;
+            padding: 10vh 10vw;
+            background-color: #ecf0f3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: auto;
+            box-shadow: inset -7px -7px 11px 4px #aaabac, -7px -7px 4px 2px #aaabac;
+        }
+
+        .inputs {
+            display: flex;
+            flex-direction: column;
+            margin: 20px 0;
+            align-items: center;
+        }
+
+        input {
+            margin: 20px 10vw;
+            width: 70vw;
+            min-width: 200px;
+            padding: 10px;
+            border-radius: 20px;
+            border: solid 0.5px;
+        }
+
+        button {
+            margin: 20px 10vw;
+            width: 70vw;
+            min-width: 200px;
+            padding: 10px;
+            border-radius: 20px;
+            border: solid 0.5px;
+        }
+
+        span{
+            color: #dec703;;
+        }
+
+        /* @media (max-width:400px) {
+            input , button{
+                width: 200px;
+            }
+        } */
+    </style>
+
+    <div class="container">
+        <h1>BMI Calculator</h1>
+        <div class="inputs">
+            <input type="number" name="Weight" id="weight" placeholder="Enter your Weight in kg">
+            <input type="number" name="Height" id="height" placeholder="Enter your Height in Meter">
+            <button type="submit" onclick="bmi()">Submit</button>
+        </div>
+        <div class="result" id="resultbox" style="display: none;">
+            <h1 id="mgs">Your Body Mass Index is <span id="result"></span></h1>
+            <h2 id="mgs">You are <span id="status"></span></h2>
+            <h4 id="mgs">Tip : <span id="Tip"></span></h4>
+        </div>
+        <footer>Made By Sundram Singh</footer>
+    </div>
+
+    <script>
+        function bmi() {
+            let resultbox = document.getElementById('resultbox')
+            resultbox.style.display = 'block';
+            const weight = document.getElementById('weight').value.trim();
+            const height = document.getElementById('height').value.trim();
+            let newheight = height * height;
+            let answer = weight / newheight;
+            console.log(typeof answer)
+            console.log(answer)
+            let result = document.getElementById('result');
+            result.innerText = answer;
+
+            if (answer > 18.5 && answer < 24.9) {
+                console.log("Fit !")
+                let status = document.getElementById('status');
+                status.innerText = ("Fit !");
+                let tip = document.getElementById('Tip');
+                tip.innerText = ("Well Done! Maintain this status")
+            }
+            else {
+                console.log("Not Fit !")
+                let status = document.getElementById('status');
+                status.innerText = ("Not Fit !");
+
+                if (answer < 18.5) {
+                    let required = 18.5 - answer;
+                    console.log("You need to increase " + required + "Kg weight")
+                    let tip = document.getElementById('Tip');
+                    tip.innerText = ("You need to increase " + required + "Kg weight")
+                } else {
+                    let extra = answer - 24.9;
+                    console.log("You need to decrease " + extra + "Kg weight")
+                    let tip = document.getElementById('Tip');
+                    tip.innerText = ("You need to decrease " + extra + "Kg weight")
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
