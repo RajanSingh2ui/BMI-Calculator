@@ -12,7 +12,7 @@
 
     <style>
         body {
-            background-color: grey;
+            background-color: #000000;
         }
 
         .container {
@@ -20,7 +20,7 @@
             margin: 20px;
             border-radius: 10px;
             padding: 10vh 10vw;
-            background-color: #ecf0f3;
+            background-color: #ffffff;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -53,64 +53,88 @@
             border: solid 0.5px;
         }
 
-        span{
-            color: #dec703;;
+        span {
+            color: #dec703;
+            ;
         }
 
-        div a{
+        div a {
             padding: 1vw 5vw;
             width: 50px;
             background-color: #53c8ff;
             border-radius: 20px;
             text-decoration: none;
             margin-bottom: 20px;
-            color: #dec703;
+            color: #a09002;
             font-weight: 900;
+            text-shadow: #aaabac 1px 2px 2px;
+
         }
 
-        footer{
-            margin-top:50px;
+        footer {
+            margin-top: 50px;
         }
 
         @media screen and (max-width: 400px) {
-            div a{
+            div a {
                 padding: 1vw 2vw;
                 background-color: #53c8ff;
                 border-radius: 20px;
                 text-decoration: none;
                 margin-bottom: 20px;
-                color: #dec703;
-                font-weight: 900;
-                font-size: 12px; /* Change font size for better readability */
+                color: #fffdeb;
+                font-weight: 1000;
+                font-size: 12px;
+                /* Change font size for better readability */
+                text-shadow: #aaabac 1px 2px 2px;
             }
-            
+
+            h1#mgs{
+                font-size: 24px;
+            }
+
         }
     </style>
 
     <div class="container">
-        <h1>BMI Calculator</h1>
+        <h1><span>BMI</span> Calculator</h1>
         <div class="inputs">
-            <input type="number" name="Weight" id="weight" placeholder="Enter your Weight in kg">
-            <input type="number" name="Height" id="height" placeholder="Enter your Height in Meter">
+            <input type="number" name="Weight" id="weight" placeholder="Enter your Weight in kg, eg. 48">
+            <input type="number" name="Height" id="height" placeholder="Enter your Height in cm, eg. 175">
             <button type="submit" onclick="bmi()">Submit</button>
         </div>
         <div class="result" id="resultbox" style="display: none;">
-            <h1 id="mgs">Your Body Mass Index is <span id="result"></span></h1>
+            <h1 id="mgs">Your Body Mass Index is <span id="result"></span> approx.</h1>
             <h2 id="mgs">You are <span id="status"></span></h2>
             <h4 id="mgs">Tip : <span id="Tip"></span></h4>
         </div>
         <div>
             <a href="https://rajanchat.netlify.app/" target="blank">Try My New Chatting App For Free</a>
         </div>
-        <footer>Made By Sundram Singh</footer>
+        <footer>Made with ❤️ Rajan Singh</footer>
     </div>
 
     <script>
+
+        // function enter() {}
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter') {
+                    bmi();
+                    event.preventDefault();
+                }
+            });
+        
+
         function bmi() {
             let resultbox = document.getElementById('resultbox')
             resultbox.style.display = 'block';
             const weight = document.getElementById('weight').value.trim();
-            const height = document.getElementById('height').value.trim();
+            const heightcm = document.getElementById('height').value.trim();
+                if (weight == '' || heightcm == '') {
+                alert("Fill the input's")
+                resultbox.style.display = 'none';
+            }
+            let height = heightcm / 100;
             let newheight = height * height;
             let answer = weight / newheight;
             console.log(typeof answer)
@@ -118,25 +142,27 @@
             let result = document.getElementById('result');
             result.innerText = answer;
 
-            if (answer > 18.5 && answer < 24.9) {
+            if (answer >= 18.5 && answer <= 24.9) {
                 console.log("Fit !")
                 let status = document.getElementById('status');
                 status.innerText = ("Fit !");
                 let tip = document.getElementById('Tip');
                 tip.innerText = ("Well Done! Maintain this status")
             }
+
             else {
                 console.log("Not Fit !")
                 let status = document.getElementById('status');
                 status.innerText = ("Not Fit !");
 
-                if (answer < 18.5) {
-                    let required = 18.5 - answer;
+                if ( answer < 18.5 && answer < 24.9) {
+                    let required = (newheight * 18.5) - weight;
                     console.log("You need to increase " + required + "Kg weight")
                     let tip = document.getElementById('Tip');
                     tip.innerText = ("You need to increase " + required + "Kg weight")
-                } else {
-                    let extra = answer - 24.9;
+                } 
+                if (answer > 24.9) {
+                    let extra = weight - (newheight * 24.9);
                     console.log("You need to decrease " + extra + "Kg weight")
                     let tip = document.getElementById('Tip');
                     tip.innerText = ("You need to decrease " + extra + "Kg weight")
